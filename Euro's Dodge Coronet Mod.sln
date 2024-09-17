@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Euro's Dodge Coronet Mod", "Euro's Dodge Coronet Mod\Euro's Dodge Coronet Mod.csproj", "{4CE5AB4D-44A8-4205-8552-758F11281A3D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4CE5AB4D-44A8-4205-8552-758F11281A3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CE5AB4D-44A8-4205-8552-758F11281A3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CE5AB4D-44A8-4205-8552-758F11281A3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CE5AB4D-44A8-4205-8552-758F11281A3D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DC79F9F3-3EFD-4863-A129-0BC6688AB323}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,121 @@
+ManifestFileVersion: 0
+CRC: 3249873906
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d2bbeab01019d3f1aee62aae79e33889
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c6322a34fdefc59c6383ea866c167b12
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: ff5c1d4fd94ca4946a7d3d2ef9328366, type: 3}
+- Class: 114
+  Script: {fileID: -399147334, guid: e6911c5f5dd22e04d8d9d32f124d5658, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b162ba348dd3ee142937aedae7c5ac3d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ba5f003a0fc75584ca905f1a9725950d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1b90aef69dd5cc043952f1cdd5ad1884, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5eecb74d16ad146469dc99ba3c8335b8, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2040117bdddecb9459e5da366e8e580d, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 156049354
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Coronet/NEW/Materials/Images/white_leather-2K/2K-Leather_25_Metallic.jpg
+- Assets/Coronet/NEW/Materials/Images/white_leather-2K/2K-Leather_25_Specular Level.jpg
+- Assets/Coronet/NEW/Prefabs/Chassis/70_FramerailR.prefab
+- Assets/Coronet/NEW/Prefabs/Chassis/70_RearShockSupport.prefab
+- Assets/Coronet/NEW/Materials/Images/Carpet/diffuse.png
+- Assets/Coronet/NEW/Prefabs/Chassis/70_RearFrameBrace.prefab
+- Assets/Coronet/NEW/Prefabs/Chassis/70_Firewall1.prefab
+- Assets/Coronet/NEW/Materials/DoubleSidedChrome.mat
+- Assets/Coronet/NEW/Materials/Steel.mat
+- Assets/Coronet/NEW/Materials/Chrome.mat
+- Assets/Coronet/NEW/Materials/Images/white_leather-2K/2K-Leather_25_Height.jpg
+- Assets/Coronet/NEW/Prefabs/Chassis/70C_InnerPanelRR.prefab
+- Assets/Coronet/NEW/Prefabs/Chassis/70C_Seat_Brace.prefab
+- Assets/Coronet/NEW/Prefabs/Accessorys/70_Heater_Core.prefab
+- Assets/Coronet/NEW/Materials/Glass.mat
+- Assets/Coronet/NEW/Prefabs/Chassis/70_HeadlightBracketR.prefab
+- Assets/Coronet/NEW/Materials/Images/black_leather_24-2K/2K-Leather_24_Ambient Occlusion.jpg
+- Assets/Coronet/NEW/Materials/VinylWhite.mat
+- Assets/Coronet/NEW/Materials/Images/black_leather_24-2K/2K-Leather_24_Normal.jpg
+- Assets/Coronet/NEW/Materials/Images/36144.jpg
+- Assets/Coronet/NEW/Prefabs/Coronet_After_Build_Transparents.prefab
+- Assets/Coronet/NEW/Prefabs/Doors/70C_DoorR.prefab
+- Assets/Coronet/NEW/Prefabs/Coronet_empty2.prefab
+- Assets/Coronet/NEW/Materials/Images/Car Lights.png
+- Assets/Coronet/NEW/Prefabs/Chassis/70C_Floor_Middle.prefab
+- Assets/Coronet/NEW/Prefabs/Coronet_empty.prefab
+- Assets/Coronet/NEW/Materials/Images/white_leather-2K/2K-Leather_25_Ambient Occlusion.jpg
+- Assets/Coronet/NEW/Materials/Images/Carpet/normal.png
+- Assets/Coronet/NEW/Prefabs/Chassis/70C_Floor_Trunk.prefab
+- Assets/Coronet/NEW/Materials/Plastic.mat
+- Assets/Coronet/NEW/Materials/Images/white_leather-2K/2K-Leather_25_Base Color.jpg
+- Assets/Coronet/NEW/Materials/Images/white_leather-2K/2K-Leather_25_Normal.jpg
+- Assets/Coronet/NEW/Materials/Images/white_leather-2K/2K-Leather_25_Opacity.jpg
+- Assets/Coronet/NEW/Prefabs/Fenders/70C_FenderRR.prefab
+- Assets/Coronet/NEW/Prefabs/Chassis/70C_WheelhouseR.prefab
+- Assets/Coronet/NEW/Prefabs/Chassis/70_HeadlightBracketL.prefab
+- Assets/Coronet/NEW/Materials/Images/black_leather_24-2K/2K-Leather_24_Specular
+  Level.jpg
+- Assets/Coronet/NEW/Prefabs/Doors/70C_DoorL.prefab
+- Assets/Coronet/NEW/Prefabs/Roof/70C_Roof1.prefab
+- Assets/Coronet/NEW/Prefabs/Accessorys/70_WiperMotor.prefab
+- Assets/Coronet/NEW/Materials/Images/black_leather_24-2K/2K-Leather_24_Roughness.jpg
+- Assets/Coronet/NEW/Materials/Images/black_leather_24-2K/2K-Leather_24_Base Color.jpg
+- Assets/Coronet/NEW/Prefabs/Chassis/70_FramerailL.prefab
+- Assets/Coronet/NEW/Prefabs/Chassis/70_LowerRadiatorSupport.prefab
+- Assets/Coronet/NEW/Prefabs/Chassis/70_InnerPanelL.prefab
+- Assets/Coronet/NEW/Prefabs/Fenders/70C_FenderFillerRL.prefab
+- Assets/Coronet/NEW/Prefabs/Chassis/70C_RockerR.prefab
+- Assets/Coronet/NEW/Prefabs/Chassis/70C_WheelhouseL.prefab
+- Assets/Coronet/NEW/Materials/Carpet.mat
+- Assets/Coronet/NEW/Prefabs/Chassis/70C_Floor.prefab
+- Assets/Coronet/NEW/Prefabs/Templates/StructurePREFAB.prefab
+- Assets/Coronet/NEW/Materials/Images/Carpet/vinyl-tablecloth_normal-ogl.png
+- Assets/Coronet/NEW/Materials/Images/white_leather-2K/2K-Leather_25_Roughness.jpg
+- Assets/Coronet/NEW/Prefabs/Chassis/70_UpperRadiatorSupport.prefab
+- Assets/Coronet/NEW/Prefabs/Cowls/70_CowlR.prefab
+- Assets/Coronet/NEW/Prefabs/Coronet_Transparents.prefab
+- Assets/Coronet/NEW/Materials/Images/black_leather_24-2K/2K-Leather_24_Opacity.jpg
+- Assets/Coronet/NEW/Prefabs/Chassis/70_Torsionbar.prefab
+- Assets/Coronet/NEW/Prefabs/Chassis/70C_InnerPanelRL.prefab
+- Assets/Coronet/NEW/Prefabs/Valances/70_ValanceR.prefab
+- Assets/Coronet/NEW/Materials/VinylBlack.mat
+- Assets/Coronet/NEW/Prefabs/Fenders/70C_FenderRL.prefab
+- Assets/Coronet/NEW/Prefabs/Chassis/70C_RockerL.prefab
+- Assets/Coronet/NEW/Materials/Images/black_leather_24-2K/2K-Leather_24_Height.jpg
+- Assets/Coronet/NEW/Prefabs/Weld/Weld.prefab
+- Assets/Coronet/NEW/Materials/Images/black_leather_24-2K/2K-Leather_24_Metallic.jpg
+- Assets/Coronet/NEW/Materials/Metal.mat
+- Assets/Coronet/NEW/Prefabs/Cowls/70_CowlF.prefab
+- Assets/Coronet/NEW/Prefabs/Fenders/70C_FenderFillerRR.prefab
+- Assets/Coronet/NEW/Prefabs/Chassis/70_InnerPanelR.prefab
+Dependencies: []
