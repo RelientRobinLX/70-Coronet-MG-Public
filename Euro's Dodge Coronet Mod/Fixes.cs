@@ -87,8 +87,13 @@ namespace RR_Coronet
                 }
                 PrettyLog.Log("FixIndecators", "END");
             }
-
-
+            public static void FixWheels(Part newpart)
+            {
+                newpart.Prefab.tag = "Wheel1";
+                newpart.Prefab.transform.Find("TireValve").gameObject.layer = LayerMask.NameToLayer("FlatBolts");
+                newpart.Prefab.GetComponent<CarProperties>().RealWheel = true;
+                newpart.Prefab.AddComponent<ANYdamage>().Rim = true;
+            }
             public static void AddHazzards(Part p)
             {
                 // Wiper switch setup
@@ -119,7 +124,12 @@ namespace RR_Coronet
                 CL.LightRend = p.Prefab.GetComponent<MeshRenderer>();
                 CL.RunningLight = true;
 
-                p.SetStandardShader();
+
+                p.CarProps.ClusterR = p.Prefab.transform.Find("Right").gameObject;
+                p.CarProps.ClusterL = p.Prefab.transform.Find("Left").gameObject;
+
+                p.CarProps.ClusterL.layer = LayerMask.NameToLayer("OpenableParts");
+                p.CarProps.ClusterR.layer = LayerMask.NameToLayer("OpenableParts");
 
                 //-
                 // / GAUGES
@@ -240,6 +250,14 @@ namespace RR_Coronet
 
                 NewSwitchW.gameObject.layer = LayerMask.NameToLayer("OpenableParts");
 
+                int LastIndex = p.Renderer.materials[1].shaderKeywords.Length;
+
+                string[] materialArray = p.Renderer.materials[1].shaderKeywords;
+
+                Array.Resize(ref materialArray, materialArray.Length + 1);
+
+                materialArray[LastIndex] = "_EMISSION";
+
                 // p.Prefab.gameObject.layer = LayerMask.NameToLayer("Windows");
 
             }
@@ -280,6 +298,27 @@ namespace RR_Coronet
                         break;
 
 
+                }
+
+            }
+
+            public static void SetExhaustColiders(Part p, string Side)
+            {
+                switch (Side)
+                {
+                    case "R":
+                        GameObject go = cachedResources.Load<GameObject>("ExhaustR07");
+
+                        p.Prefab.transform.GetChild(0).GetComponent<MeshCollider>().sharedMesh = go.transform.Find("QuarterpanelCol.001").GetComponent<MeshCollider>().sharedMesh;
+
+                        break;
+
+                    case "L":
+                        GameObject go2 = cachedResources.Load<GameObject>("ExhaustL07");
+
+                        p.Prefab.transform.GetChild(0).GetComponent<MeshCollider>().sharedMesh = go2.transform.Find("QuarterpanelCol.001").GetComponent<MeshCollider>().sharedMesh;
+
+                        break;
                 }
 
             }
@@ -370,16 +409,6 @@ namespace RR_Coronet
 
         public class ReflectionFixes 
         {
-
-            public static void TemplateFixes(GameObject objective) 
-            { 
-            
-            
-
-
-            
-            }
-
             public static void FixFluids(GameObject objective) 
             {
 
@@ -387,8 +416,11 @@ namespace RR_Coronet
 
                 PrettyLog.Log("ReflectionFixes", "0");
 
+                PrettyLog.DebugLog("ReflectionFixes", "Engine Fixes started");
 
                 Transform engine = objective.transform.Find("EngineTranny/CylinderBlock/CylinderBlock");
+
+
                 if (engine)
                 {
                     //Dipstick Fix
@@ -424,6 +456,9 @@ namespace RR_Coronet
                     OilpainFluid.transform.parent.GetComponent<CarProperties>().FluidCondition = 1f;
 
                 }
+
+                PrettyLog.DebugLog("ReflectionFixes", "rad Fixes started");
+
 
                 Transform radiator = objective.transform.Find("RRLX_70_UpperRadiatorSupport/RRLX_70_UpperRadiatorSupport/RRLX_70_LowerRadiatorSupport/RRLX_70_LowerRadiatorSupport/Radiator07/Radiator07");
                 if (radiator)
@@ -534,7 +569,11 @@ namespace RR_Coronet
                 }
 
             }
-
+            /// <summary>
+            /// A function that fixes the BoneSCR's for the chad style front inner-fenders. which covers uppercontrol arms and shocks.
+            /// </summary>
+            /// <param name="objective"></param>
+            /// <param name="Position"></param>
             public static void FixInnerFenderSuspension(GameObject objective, string Position) 
             {
                 switch(Position) 
@@ -602,6 +641,11 @@ namespace RR_Coronet
 
                 }
             }
+            /// <summary>
+            /// Function name pretty much sums it up, Fixes the BoneSCR's for the rear leafsprings, with information sepearted depending on their position (L, R)
+            /// </summary>
+            /// <param name="objective"></param>
+            /// <param name="Position"></param>
             public static void FixRearSuspension(GameObject objective, string Position)
             {
                 switch (Position) 
@@ -645,6 +689,11 @@ namespace RR_Coronet
 
             }
 
+            /// <summary>
+            /// Fixes variables in the WindowLift Comp from being null or pointing to unloaded objects (CarGen Unique Fix)
+            /// </summary>
+            /// <param name="part"></param>
+            /// <param name="Pos"></param>
             public static void FixWindowRegs(GameObject part, string Pos) 
             {
 
@@ -653,7 +702,7 @@ namespace RR_Coronet
                     case "FR":
                         PrettyLog.DebugLog(nameof(FixWindowRegs), "1");
 
-                        WindowLift WRLR = part.GetComponent<WindowLift>(); // WHY IN THE FUCK DOES WRLR NEED TO BE ADDED WHEN IT SHOULD ALREADY FUCKING EXIST! FUCK THESE WINDOWS.
+                        WindowLift WRLR = part.GetComponent<WindowLift>();
 
                         GameObject PartParent = part.transform.parent.gameObject;
 
@@ -732,7 +781,7 @@ namespace RR_Coronet
 
             }
 
-            public static void FixRearShocks(GameObject objective) // Yeah should prob fix that XD
+            public static void FixRearShocks(GameObject objective)
             {
                 GameObject ShockL = objective.transform.GetChild(0).gameObject;
                 GameObject ShockR = objective.transform.GetChild(1).gameObject;
@@ -793,13 +842,30 @@ namespace RR_Coronet
                     BrakeLinePivotParent.Find("FLbrakePivot").rotation = new Quaternion(308.7748f, 357.6768f, 92.8439f, 0);
 
                 }
+
+                public static void FixChildPrefabRefs(GameObject CarObject)
+                {
+                    CarProperties[] AllCP = CarObject.GetComponentsInChildren<CarProperties>();
+
+                    foreach (CarProperties CP in AllCP)
+                    {
+                        if (CP.name.Contains("RRLX"))
+                        {
+                            CP.PREFAB = ModMain.ThisMod.Parts.Find(x => x.CarProps.PrefabName == CP.PrefabName).Prefab; // Fastest method to find parts.
+                        }
+                        else
+                        {
+                            PartManager.gameParts.Find(x => x.name == CP.name);
+                        }
+                    }
+                }
                 public static void FixChildDMG(MainCarProperties CarObject) 
                 {
                     CarProperties[] AllCP = CarObject.gameObject.GetComponentsInChildren<CarProperties>();
 
                     foreach (CarProperties CP in AllCP) 
                     {
-                        if (CP.ChildDamag != null & CP.SinglePart == true) 
+                        if (CP.ChildDamag != null && CP.SinglePart == true)  // Ty to Fede.uy for pointing out to me that && and & are different indentifiers!
                         {
                             PrettyLog.Log(nameof(FixChildDMG), CP.ChildDamag.name);
                             try 

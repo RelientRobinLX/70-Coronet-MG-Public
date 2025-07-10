@@ -4,11 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace RR_Coronet
 {
     internal class DevDiagnostics
     {
+
+
+        public static string getUtilsVersion() 
+        {
+            string version = "";
+            version = ModLoader.mods.Where(x => x.ID == "ModUtils").Select(x => x.Version).ToString();
+            return version;
+        }
+
         public static void CheckWeldCounts(Part newpart) 
         {
             WeldCut[] welds = newpart.Prefab.GetComponentsInChildren<WeldCut>();
@@ -77,6 +87,44 @@ namespace RR_Coronet
                     if (weld.otherobjectName == Objective) 
                     {
                         PrettyLog.Log(nameof(CheckWeldedNames), weld.transform.parent.name +  " HAS WELD RR");
+                    }
+                }
+            }
+        }
+
+        public static void CheckWeldCountsCB(GameObject Car)
+        {
+
+            WeldCut[] cuts = Car.GetComponentsInChildren<WeldCut>();
+
+            foreach (GameObject part in Car.transform)  
+            {
+                if (part.layer == LayerMask.NameToLayer("Ignore Raycast")) 
+                {
+                    CarProperties cp = part.GetComponent<CarProperties>();
+
+                    if (cp && cp.SinglePart == true)
+                    {
+                        Partinfo pi = part.GetComponent<Partinfo>();
+
+                        if (pi.fixedwelds > 0) 
+                        {
+                            int countedCuts = 0;
+
+                            foreach (WeldCut weld in cuts) 
+                            {
+                                if (weld.otherobjectName == pi.RenamedPrefab) 
+                                {
+                                    countedCuts ++;
+                                }
+                            }
+
+                            PrettyLog.Log(nameof(CheckWeldCountsCB), part.name + " HAS WELD REAL COUNT : " + countedCuts);
+
+                            pi.attachedwelds = countedCuts;
+
+                            pi.fixedwelds = countedCuts;
+                        }
                     }
                 }
             }

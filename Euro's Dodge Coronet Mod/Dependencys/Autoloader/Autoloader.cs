@@ -1,4 +1,5 @@
 ﻿using FluffyUnderware.DevTools.Extensions;
+using RR_Coronet.Dependencys.Autoloader;
 using RVP;
 using SimplePartLoader;
 using SimplePartLoader.CarGen;
@@ -6,153 +7,138 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using UnityEngine;
 
 namespace RR_Coronet
 {
     internal class Autoloader
     {
-        static int PartsLoaded;
-
-        static int InteriorIndex = 0;
-
-        public static string Identifer = "RRLX_";
-
-        static String MethodString = "Autoloader";
-        public static List<CarProperties> ChildDMG = new List<CarProperties>();
         public static Dictionary<string, Part> LoadedPrefabs = new Dictionary<string, Part>();
 
-        public static void Autoload(ModInstance ModI, AssetBundle Bundle, String Prefix) 
+        public static void Autoload(ModInstance ThisMod, AssetBundle ab, string prefix)
         {
-            if (Bundle == null)
-            {
-                PrettyLog.Error(MethodString, "Failed to find existing bundle, Please check resources!");
-            }
-            else 
-            {
-                PrettyLog.DebugLog(MethodString, "Bundle Recived! Loading..");
+            Stopwatch AutoloadMethodStopWatch = Stopwatch.StartNew();
 
-                Stopwatch AutoLoaderStopwatch = Stopwatch.StartNew();
-
-                foreach (string asset in Bundle.GetAllAssetNames())
+            foreach (string assetString in ab.GetAllAssetNames())
+            {
+                if (assetString.Contains(prefix))
                 {
-                    if (asset.Contains(Prefix))
+                    PrettyLog.DebugLog(nameof(Autoloader), "Loading Part path : " + assetString);
+
+                    Part LocalLoadedPart = null;
+
+                    try
                     {
-                        PrettyLog.DebugLog(MethodString, asset + " Is being processed!");
+                        LocalLoadedPart = ThisMod.Load(ab, assetString);
 
-                        Part newpart = ModI.Load(Bundle, asset);
+                        LoadedPrefabs.Add(LocalLoadedPart.CarProps.PrefabName, LocalLoadedPart);
 
-                        Partinfo PI1 = newpart.Prefab.GetComponent<Partinfo>();
+                        PrettyLog.DebugLog(nameof(Autoloader), "Loaded Part : " + LocalLoadedPart.CarProps.PrefabName + " | Using path : " + assetString);
 
-                        LoadedPrefabs.Add(newpart.CarProps.PrefabName, newpart);
-
-                        PrettyLog.DebugLog(MethodString, newpart.CarProps.name + " Has Been Auto Loaded!");
-
-                        if (newpart.CarProps.gameObject.TryGetComponent<Partinfo>(out Partinfo PI))
-                        {
-
-                            if (newpart.CarProps.Openable == true)
-                            {
-
-                                if (PI.Rdoor)
-                                {
-
-                                    newpart.MakeOpenable(OpeningType.DOOR_RIGHT);
-
-                                    newpart.PartInfo.HingePivot = newpart.CarProps.gameObject.transform.Find("HingePivot").gameObject;
-
-                                }
-
-                                if (PI.Ldoor)
-                                {
-                                    newpart.MakeOpenable(OpeningType.DOOR_LEFT);
-
-                                    newpart.PartInfo.HingePivot = newpart.CarProps.gameObject.transform.Find("HingePivot").gameObject;
-                                }
-
-                                if (PI.HoodHalf)
-                                {
-
-                                    newpart.MakeOpenable(OpeningType.HOOD_HALF);
-
-                                    PrettyLog.Log(nameof(Autoloader), newpart.CarProps.PartName);
-
-                                    newpart.PartInfo.HingePivot = newpart.CarProps.gameObject.transform.Find("HingePivot").gameObject;
-                                }
-
-                                if (PI.Trunk)
-                                {
-
-                                    newpart.MakeOpenable(OpeningType.TRUNK);
-
-                                    newpart.PartInfo.HingePivot = newpart.CarProps.gameObject.transform.Find("HingePivot").gameObject;
-
-                                }
-
-                            }
-
-                        }
-
-                        if (newpart.HasProperty("Prytool"))
-                        {
-                            newpart.UsePrytoolAttachment(); 
-                        }
-
-                        if (newpart.HasProperty("Hand"))
-                        {
-                            newpart.UseHandAttachment();
-                        }
-
-                        if (newpart.HasProperty("CarLight"))
-                        {
-                            newpart.SetStandardShader();
-                        }
-
-                        if (newpart.PartInfo.Window) 
-                        {
-                            if (newpart.PartInfo.RenamedPrefab == Identifer + "70C_Windshield" || newpart.PartInfo.RenamedPrefab == Identifer + "70C_Window_R")
-                            {
-                                PrettyLog.DebugLog(nameof(Autoloader), "Skipping 70C_Windshield and 70C_Window_R");
-                            }
-                            else 
-                            {
-                                ShatterPart SP =  newpart.CarProps.gameObject.AddComponent<RVP.ShatterPart>();
-                                SP.tag = "Window";
-                            
-                            }
-                        
-                        }
-
-                        if (newpart.CarProps.Interior) 
-                        {
-                            InteriorModShop.InteriorPartsList.Insert(InteriorIndex, newpart.Prefab.gameObject);
-                            InteriorIndex += 1;
-                        }
-
-                        if (newpart.PartInfo.Rim) 
-                        {
-                            newpart.Prefab.tag = "Wheel1";
-                            newpart.Prefab.transform.Find("TireValve").gameObject.layer = LayerMask.NameToLayer("FlatBolts");
-                            newpart.Prefab.GetComponent<CarProperties>().RealWheel = true;
-                            newpart.Prefab.AddComponent<ANYdamage>().Rim = true;
-                        
-                        }
-                        newpart.PartInfo.price -= 15f;
+                    }
+                    catch (Exception ex)
+                    {
+                        PrettyLog.Error(nameof(Autoloader), "Failed to load Part path : " + assetString + " | Exception : " + ex.ToString());
+                        continue;
                     }
 
-                }                
-                PartsLoaded = LoadedPrefabs.Count;
+                    CheckOpenableStatus(LocalLoadedPart);
 
-                AutoLoaderStopwatch.Stop();
-                PrettyLog.Log(MethodString, "Autoloader Finished! Loaded " + PartsLoaded + " Parts with the prefix '" + Prefix + "'" + " In : " + AutoLoaderStopwatch.Elapsed.ToString());
+                    if (LocalLoadedPart.Properties.Count > 0)
+                    {
+                        CheckPartPropsStatus(LocalLoadedPart);
+                    }
 
+                    LocalLoadedPart.PartInfo.price -= 15f;
+
+                }
+            }
+
+            AutoloadMethodStopWatch.Stop();
+
+            PrettyLog.Log(nameof(Autoloader), "Loaded " + LoadedPrefabs.Count + " Parts from " + ab.name + " Assetbundle in : " + AutoloadMethodStopWatch.ElapsedMilliseconds + " ms");
+        }
+
+
+        private static void CheckOpenableStatus(Part LocalLoadedPart) 
+        {
+            if (LocalLoadedPart.Properties.Contains("DisableOpenable") == true)
+            {
+                return;
+            }
+
+            if (LocalLoadedPart.PartInfo.Openable == true)
+            {
+                if (LocalLoadedPart.PartInfo.HoodHalf)
+                {
+                    LocalLoadedPart.MakeOpenable(OpeningType.HOOD_HALF);
+                    return;
+                }
+                if (LocalLoadedPart.PartInfo.Trunk)
+                {
+                    LocalLoadedPart.MakeOpenable(OpeningType.TRUNK);
+                    return;
+                }
+                if (LocalLoadedPart.PartInfo.Ldoor)
+                {
+                    LocalLoadedPart.MakeOpenable(OpeningType.DOOR_LEFT);
+                    return;
+                }
+                if (LocalLoadedPart.PartInfo.Rdoor)
+                {
+                    LocalLoadedPart.MakeOpenable(OpeningType.DOOR_RIGHT);
+                    return;
+                }
             }
         }
 
-        public static void ManualLoad(AssetBundle Bundle, String Name) 
+        private static void CheckPartPropsStatus(Part LocalLoadedPart) 
         {
-           
-            Bundle.LoadAsset(Name);
+            foreach (string Property in LocalLoadedPart.Properties) 
+            {
+                switch (Property) 
+                {
+                    case "Prytool":
+                        LocalLoadedPart.UsePrytoolAttachment();
+                        break;
+                    case "Hand":
+                        LocalLoadedPart.UseHandAttachment();
+                        break;
+                    case "Rim":
+                        LocalLoadedPart.Prefab.tag = "Wheel1";
+                        LocalLoadedPart.Prefab.transform.Find("TireValve").gameObject.layer = LayerMask.NameToLayer("FlatBolts");
+                        LocalLoadedPart.CarProps.RealWheel = true;
+                        LocalLoadedPart.Prefab.AddComponent<ANYdamage>().Rim = true;
+                        break;
+                    case "CarLight":
+                        LocalLoadedPart.SetStandardShader();
+                        break;
+                }
+            }
+        }
+
+
+        public static void Load(AssetBundle Bundle, String Name, bool isPart = false) 
+        {
+
+            try
+            {
+                if (isPart)
+                {
+                    Part p = ModMain.ThisMod.Load(Bundle, "Name");
+                    LoadedPrefabs.Add(p.CarProps.PrefabName, p);
+                }
+                else
+                {
+                    Bundle.LoadAsset(Name);
+                }
+
+            }
+            catch(Exception ex) 
+            {
+                PrettyLog.Error(nameof(Load), ex.ToString());
+            }
 
         }
 

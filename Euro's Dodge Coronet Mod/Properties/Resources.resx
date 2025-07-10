@@ -121,4 +121,16 @@
   <data name="coronet" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\coronet;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="coronet_materials" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\coronet_materials;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="coronet_materials_urp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\coronet_materials_urp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="coronet_startoption" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\coronet_startoption;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RCMicon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RCMicon;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

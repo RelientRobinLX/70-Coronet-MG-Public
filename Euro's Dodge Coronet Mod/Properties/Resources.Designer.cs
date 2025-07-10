@@ -69,5 +69,45 @@ namespace RR_Coronet.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] coronet_materials {
+            get {
+                object obj = ResourceManager.GetObject("coronet_materials", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] coronet_materials_urp {
+            get {
+                object obj = ResourceManager.GetObject("coronet_materials_urp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] coronet_startoption {
+            get {
+                object obj = ResourceManager.GetObject("coronet_startoption", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] RCMicon {
+            get {
+                object obj = ResourceManager.GetObject("RCMicon", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

@@ -9,6 +9,8 @@ using UnityEngine;
 namespace RR_Coronet.CustomMonoScripts
 {
 
+    // Removed due to public dislike. Keeping code incase of future use in other projects.
+    /*
     [HarmonyPatch(typeof(MainCarProperties), nameof(MainCarProperties.CreatingJunkyard))]
     public static class RarityControllerPatcher
     {
@@ -47,5 +49,5 @@ namespace RR_Coronet.CustomMonoScripts
         }
 
     }
- 
+  */
 }

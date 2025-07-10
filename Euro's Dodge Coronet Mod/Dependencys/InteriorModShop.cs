@@ -82,29 +82,65 @@ namespace RR_Coronet
                 {
                     GameObject Part = ColorPalletes.GetChild(i).gameObject;
 
-                    if (Part.name.Contains("70"))
+                    if (Part.name.Contains("09") || Part.name.Contains("70"))
                     {
-
 
                         SaleItem PS = Part.AddComponent<SaleItem>();
 
                         PrettyLog.DebugLog(nameof(MakeShop), Part.name);
 
-                        try
+                        if (Part.transform.childCount > 0)
                         {
-                            GameObject PartPref = Autoloader.LoadedPrefabs[Autoloader.Identifer + Part.name].Prefab;
-                            PS.Item = PartPref;
-                            PS.Price = PartPref.GetComponent<Partinfo>().price;
-                            PS.interior = 1;
+                            if (Part.transform.GetChild(0).name == "PARTS_MANAGER_PART")
+                            {
+                                GameObject PartPref = PartManager.gameParts.Find(x => x.name == Part.name);
+                                PS.Item = PartPref;
+                                PS.Price = PartPref.GetComponent<Partinfo>().price;
+                                PS.interior = 1;
 
-                            // Once we have found the part, We can change the name to its display version
-                            PS.gameObject.name = PS.Item.GetComponent<CarProperties>().PartName;
+                                // Once we have found the part, We can change the name to its display version
+                                PS.gameObject.name = PS.Item.GetComponent<CarProperties>().PartName;
 
-                            Part.GetComponent<MeshRenderer>().material = DefaultMat;
+                                Part.GetComponent<MeshRenderer>().material = DefaultMat;
+                            }
+                            else 
+                            {
+                                try
+                                {
+                                    GameObject PartPref = Autoloader.LoadedPrefabs["RRLX_" + Part.name].Prefab;
+                                    PS.Item = PartPref;
+                                    PS.Price = PartPref.GetComponent<Partinfo>().price;
+                                    PS.interior = 1;
+
+                                    // Once we have found the part, We can change the name to its display version
+                                    PS.gameObject.name = PS.Item.GetComponent<CarProperties>().PartName;
+
+                                    Part.GetComponent<MeshRenderer>().material = DefaultMat;
+                                }
+                                catch // Lets just make sure if a referance returns null, That we can catch it.
+                                {
+                                    PrettyLog.Error(nameof(MakeShop), "Couldn't Find : " + Part.name + " In list.");
+                                }
+                            }
                         }
-                        catch // Lets just make sure if a referance returns null, That we can catch it.
+                        else 
                         {
-                            PrettyLog.Error(nameof(MakeShop), "Couldn't Find : " + Part.name + " In list.");
+                            try
+                            {
+                                GameObject PartPref = Autoloader.LoadedPrefabs["RRLX_" + Part.name].Prefab;
+                                PS.Item = PartPref;
+                                PS.Price = PartPref.GetComponent<Partinfo>().price;
+                                PS.interior = 1;
+
+                                // Once we have found the part, We can change the name to its display version
+                                PS.gameObject.name = PS.Item.GetComponent<CarProperties>().PartName;
+
+                                Part.GetComponent<MeshRenderer>().material = DefaultMat;
+                            }
+                            catch // Lets just make sure if a referance returns null, That we can catch it.
+                            {
+                                PrettyLog.Error(nameof(MakeShop), "Couldn't Find : " + Part.name + " In list.");
+                            }
                         }
 
                         PrettyLog.DebugLog(nameof(MakeShop), "4");
